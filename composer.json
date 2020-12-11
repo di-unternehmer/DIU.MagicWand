@@ -16,7 +16,8 @@
         }
     ],
     "require": {
-        "neos/flow": "~6.0 || dev-master"
+        "neos/flow": "~6.0 || dev-master",
+        "aws/aws-sdk-php": "~3.164.0"
     },
     "autoload": {
         "psr-4": {
