@@ -1,5 +1,5 @@
 {
-    "name": "sitegeist/magicwand",
+    "name": "sitegeist/magicwand-diu",
     "type": "neos-package",
     "description": "Tools that make the Flow/Neos development easier",
     "license": "MIT",
@@ -16,8 +16,8 @@
         }
     ],
     "require": {
-        "neos/flow": "~6.0 || dev-master",
-        "aws/aws-sdk-php": "~3.164.0"
+        "neos/flow": "*",
+        "aws/aws-sdk-php": "*"
     },
     "autoload": {
         "psr-4": {

@@ -23,10 +23,18 @@ trait ProxyAwareTargetTrait
         // initialize uriBuilder with request
         $requestHandler = $this->bootstrap->getActiveRequestHandler();
         if ($requestHandler instanceof HttpRequestHandlerInterface) {
-            $request = ActionRequest::fromHttpRequest($requestHandler->getComponentContext()->getHttpRequest());
+            if (method_exists(ActionRequest::class, 'fromHttpRequest')) {
+                // From Flow 6+ we have to use a static method to create an ActionRequest. Earlier versions use the constructor.
+                $request = ActionRequest::fromHttpRequest($requestHandler->getComponentContext()->getHttpRequest());
+            } else {
+                // This can be cleaned up when this package in a future release only support Flow 6+.
+                $request = new ActionRequest($requestHandler->getHttpRequest());
+            }
             $this->uriBuilder->setRequest($request);
         }
         parent::initializeObject();
+
+
     }
 
     /**
