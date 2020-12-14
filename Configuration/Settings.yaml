@@ -1,4 +1,4 @@
-Sitegeist:
+DIU:
   MagicWand:
     aws:
       enabled: false
@@ -59,13 +59,13 @@ Neos:
 
       storages:
         defaultPersistentResourcesStorage:
-          storage: 'Sitegeist\MagicWand\ResourceManagement\ProxyAwareWritableFileSystemStorage'
+          storage: 'DIU\MagicWand\ResourceManagement\ProxyAwareWritableFileSystemStorage'
 
       targets:
         localWebDirectoryPersistentResourcesTarget:
-          target: 'Sitegeist\MagicWand\ResourceManagement\ProxyAwareFileSystemSymlinkTarget'
+          target: 'DIU\MagicWand\ResourceManagement\ProxyAwareFileSystemSymlinkTarget'
 
     mvc:
       routes:
-        Sitegeist.MagicWand:
+        DIU.MagicWand:
           position: 'before Neos.Neos'

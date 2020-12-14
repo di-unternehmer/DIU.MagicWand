@@ -1,5 +1,5 @@
 {
-    "name": "sitegeist/magicwand-diu",
+    "name": "diu/magicwand",
     "type": "neos-package",
     "description": "Tools that make the Flow/Neos development easier",
     "license": "MIT",
@@ -13,6 +13,11 @@
             "name": "Martin Ficzel",
             "email": "ficzel@sitegeist.de",
             "role": "Developer"
+        },
+        {
+            "name": "Christian Schwahn",
+            "email": "christian.schwahn@di-unternehmer.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -21,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sitegeist\\MagicWand\\": "Classes"
+            "DIU\\MagicWand\\": "Classes"
         }
     },
     "extra": {

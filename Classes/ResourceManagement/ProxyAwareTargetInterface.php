@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Sitegeist\MagicWand\ResourceManagement;
+namespace DIU\MagicWand\ResourceManagement;
 
 
 interface ProxyAwareTargetInterface

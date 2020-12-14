@@ -1,12 +1,12 @@
 <?php
-namespace Sitegeist\MagicWand\ResourceManagement;
+namespace DIU\MagicWand\ResourceManagement;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Core\Bootstrap;
 use Neos\Flow\Mvc\Routing\UriBuilder;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\ResourceManagement\Target\FileSystemSymlinkTarget;
-use Sitegeist\MagicWand\Domain\Service\ConfigurationService;
+use DIU\MagicWand\Domain\Service\ConfigurationService;
 
 class ProxyAwareFileSystemSymlinkTarget extends FileSystemSymlinkTarget implements ProxyAwareTargetInterface
 {

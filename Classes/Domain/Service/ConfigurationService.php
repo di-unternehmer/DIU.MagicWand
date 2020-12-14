@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\MagicWand\Domain\Service;
+namespace DIU\MagicWand\Domain\Service;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Cache\Frontend\VariableFrontend;

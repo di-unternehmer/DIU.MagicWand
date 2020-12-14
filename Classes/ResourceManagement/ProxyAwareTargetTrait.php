@@ -1,6 +1,6 @@
 <?php
 
-namespace Sitegeist\MagicWand\ResourceManagement;
+namespace DIU\MagicWand\ResourceManagement;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Core\Bootstrap;
@@ -14,7 +14,7 @@ use Neos\Flow\ResourceManagement\PersistentResource;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\ResourceManagement\Storage\StorageObject;
 use Neos\Flow\ResourceManagement\Target\Exception;
-use Sitegeist\MagicWand\Domain\Service\ConfigurationService;
+use DIU\MagicWand\Domain\Service\ConfigurationService;
 
 trait ProxyAwareTargetTrait
 {
@@ -101,7 +101,7 @@ trait ProxyAwareTargetTrait
             'index',
             ['resourceIdentifier' => $resource],
             'Resource',
-            'Sitegeist.MagicWand'
+            'DIU.MagicWand'
         );
     }
 }

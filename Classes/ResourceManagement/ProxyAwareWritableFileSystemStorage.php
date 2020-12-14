@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\MagicWand\ResourceManagement;
+namespace DIU\MagicWand\ResourceManagement;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Http\Client\Browser;
@@ -8,7 +8,7 @@ use Neos\Flow\ResourceManagement\PersistentResource;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\ResourceManagement\ResourceMetaDataInterface;
 use Neos\Flow\ResourceManagement\Storage\WritableFileSystemStorage;
-use Sitegeist\MagicWand\Domain\Service\ConfigurationService;
+use DIU\MagicWand\Domain\Service\ConfigurationService;
 use Neos\Utility\Files;
 
 class ProxyAwareWritableFileSystemStorage extends WritableFileSystemStorage implements ProxyAwareStorageInterface

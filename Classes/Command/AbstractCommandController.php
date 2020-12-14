@@ -1,15 +1,15 @@
 <?php
-namespace Sitegeist\MagicWand\Command;
+namespace DIU\MagicWand\Command;
 
 /*                                                                        *
- * This script belongs to the Neos Flow package "Sitegeist.MagicWand".    *
+ * This script belongs to the Neos Flow package "DIU.MagicWand".    *
  *                                                                        *
  *                                                                        */
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Core\Bootstrap;
 use Neos\Flow\Cli\CommandController;
-use Sitegeist\MagicWand\Domain\Service\ConfigurationService;
+use DIU\MagicWand\Domain\Service\ConfigurationService;
 
 abstract class AbstractCommandController extends CommandController
 {

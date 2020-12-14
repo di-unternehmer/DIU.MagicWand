@@ -1,6 +1,6 @@
 <?php
 
-namespace Sitegeist\MagicWand\Service;
+namespace DIU\MagicWand\Service;
 
 use Neos\Flow\Annotations as Flow;
 use Aws\Lambda\LambdaClient;
@@ -11,7 +11,7 @@ class LambdaService
 {
 
     /**
-     * @Flow\InjectConfiguration(package="Sitegeist.MagicWand", path="aws")
+     * @Flow\InjectConfiguration(package="DIU.MagicWand", path="aws")
      * @var array
      */
     protected $settings;

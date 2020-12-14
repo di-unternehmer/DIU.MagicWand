@@ -1,8 +1,8 @@
 <?php
-namespace Sitegeist\MagicWand\DBAL;
+namespace DIU\MagicWand\DBAL;
 
 /*                                                                        *
- * This script belongs to the Neos Flow package "Sitegeist.MagicWand".    *
+ * This script belongs to the Neos Flow package "DIU.MagicWand".    *
  *                                                                        */
 
 use Neos\Flow\Annotations as Flow;

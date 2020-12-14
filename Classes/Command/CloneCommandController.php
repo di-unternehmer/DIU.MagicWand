@@ -1,12 +1,12 @@
 <?php
-namespace Sitegeist\MagicWand\Command;
+namespace DIU\MagicWand\Command;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Utility\Arrays;
 use Neos\Flow\Core\Bootstrap;
-use Sitegeist\MagicWand\DBAL\SimpleDBAL;
+use DIU\MagicWand\DBAL\SimpleDBAL;
 use Symfony\Component\Yaml\Yaml;
-use Sitegeist\MagicWand\Service\LambdaService;
+use DIU\MagicWand\Service\LambdaService;
 
 /**
  * @Flow\Scope("singleton")
@@ -15,7 +15,7 @@ class CloneCommandController extends AbstractCommandController
 {
 
     /**
-     * @Flow\InjectConfiguration(package="Sitegeist.MagicWand", path="aws.enabled")
+     * @Flow\InjectConfiguration(package="DIU.MagicWand", path="aws.enabled")
      * @var boolean
      */
     protected $awsEnabled;
@@ -68,7 +68,7 @@ class CloneCommandController extends AbstractCommandController
         }
     }
     /**
-     * Clone a flow setup as specified in Settings.yaml (Sitegeist.MagicWand.clonePresets ...)
+     * Clone a flow setup as specified in Settings.yaml (DIU.MagicWand.clonePresets ...)
      *
      * @param string $presetName name of the preset from the settings
      * @param boolean $yes confirm execution without further input

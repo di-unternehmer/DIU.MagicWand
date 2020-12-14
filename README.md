@@ -1,11 +1,11 @@
-# Sitegeist.MagicWand
+# DIU.MagicWand
 ### Tools that make the Flow/Neos development easier
 
 This package is intended to be used on development systems and should **NEVER** be
 installed on production servers. **Please add this package to the require-dev
 section of your composer.json**.
 
-### Original Authors & Sponsors
+### Original Authors & Sponsors (Sitegeist.MagicWand)
 
 * Wilhelm Behncke - behncke@sitegeist.de
 * Martin Ficzel - ficzel@sitegeist.de
@@ -39,10 +39,10 @@ using the commands.**
 
 ### Settings.yaml
 
-The presets that are defined in the configuration path. `Sitegeist.MagicWand.clonePresets`
+The presets that are defined in the configuration path. `DIU.MagicWand.clonePresets`
 
 ```yaml
-Sitegeist:
+DIU:
   MagicWand:
     flowCommand: './flow'
 

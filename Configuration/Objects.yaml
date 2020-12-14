@@ -1,4 +1,4 @@
-'Sitegeist\MagicWand\Domain\Service\ConfigurationService':
+'DIU\MagicWand\Domain\Service\ConfigurationService':
   properties:
     clonePresetInformationCache:
       object:
@@ -6,4 +6,4 @@
         factoryMethodName: getCache
         arguments:
           1:
-            value: Sitegeist_Magicwand_ClonePresetInformation
+            value: DIU_Magicwand_ClonePresetInformation

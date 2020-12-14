@@ -1,12 +1,12 @@
 <?php
-namespace Sitegeist\MagicWand\Controller;
+namespace DIU\MagicWand\Controller;
 
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\ResourceManagement\PersistentResource;
 use Neos\Flow\ResourceManagement\ResourceRepository;
 use Neos\Flow\ResourceManagement\ResourceManager;
-use Sitegeist\MagicWand\ResourceManagement\ResourceNotFoundException;
+use DIU\MagicWand\ResourceManagement\ResourceNotFoundException;
 
 class ResourceController extends ActionController
 {

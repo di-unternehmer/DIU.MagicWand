@@ -1,5 +1,5 @@
 <?php
-namespace Sitegeist\MagicWand\ResourceManagement;
+namespace DIU\MagicWand\ResourceManagement;
 
 use Neos\Neos\Controller\Exception;
 
