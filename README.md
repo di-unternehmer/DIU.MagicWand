@@ -5,13 +5,19 @@ This package is intended to be used on development systems and should **NEVER** 
 installed on production servers. **Please add this package to the require-dev
 section of your composer.json**.
 
-### Authors & Sponsors
+### Original Authors & Sponsors
 
 * Wilhelm Behncke - behncke@sitegeist.de
 * Martin Ficzel - ficzel@sitegeist.de
 * ... and others
 
-*The development and the public-releases of this package is generously sponsored by our employer https://www.sitegeist.de.*
+*The original development and the public-releases of this package is generously sponsored by https://www.sitegeist.de.*
+
+### This package has been modified by DIU for using Amazon AWS Lambda functions to import SQL dumps
+
+* christian.schwahn@di-unternehmer.com
+
+*The development and the public-releases of this package is generously sponsored by https://www.di-unternehmer.com.*
 
 ## Easy and fast cloning of Flow and Neos Installations
 
@@ -48,18 +54,10 @@ Sitegeist:
 
        # the name of the preset for referencing on the clone:preset command
       master:
-        # hostname or ip of the server to clone from
-        host: ~
-        # ssh username
-        user: ~
-        # ssh port
-        port: ~
-        # ssh options
-        sshOptions: ~
-        # path on the remote server
-        path: ~
-        # flow-context on the remote server
-        context: Production
+        enabled: true
+        region: 'eu-central-1'
+        #lambda function name which produces the sql dump
+        functionName: 'sql-dump'
 
         # the flow cli command on the remote server
         # default is the main flowCommand-Setting
@@ -75,39 +73,12 @@ Sitegeist:
           baseUri: http://vour.server.tld
           # define wether or not the remote uses subdivideHashPathSegments
           subdivideHashPathSegment: false
-          # curl options
-          curlOptions:
-            CURLOPT_USERPWD: very:secure
+          # different persistent path can be defined here, in case you use (for example) aws s3 storage
+          persistentPath: '/assets/persistent/'
 ```
 
 The settings should be added to the global `Settings.yaml` of the project, so that every
 developer with SSH-access to the remote server can easily clone the setup.
-
-## Quick backup and restore mechanisms for persistent data
-
-Sometimes it's useful to quickly backup an integral persistent state of an application, to then perform some risky
-change operations and restore the data in case of failure. The `stash:create`,`stash:restore`,`stash:list` and
-`stash:clear` commands of this package allow for a flawless backup-try-restore workflow.
-
-**Attention: These commands will empty the database and resources of your local Flow installation.
-The data is replaced with the information from the stash. Make sure you understand that before actually using
-the commands.**
-
-### CLI-Examples
-```
-# Create a backup of the entire database and the directory `Data/Persistent` ("stash entry") under the given name
-./flow stash:create --name=name
-
-# Lists all named stash entries
-./flow stash:list
-
-# Restores a stash entry
-./flow stash:restore --name=name
-
-# Removes all stash entries
-./flow stash:clear
-```
-**Note:** Use this command on a regular basis, because your stash tends to grow **very** large.
 
 ## Resource proxies
 
@@ -117,16 +88,117 @@ For this case the package offers the concept of resource proxies. Once activated
 This is done by custom implementations of `WritableFileSystemStorage` and `ProxyAwareFileSystemSymlinkTarget` and works out of the box if you use this storage and target in you local development environment.
 If you use other local storages, for example a local S3 storage, you can easily build your own proxy aware versions implementing the interfaces `ProxyAwareStorageInterface` and `ProxyAwareTargetInterface`of this package.
 
+## AWS credentials
 
-## Installation
+You will need to put your keys in a file called `~/.aws/credentials` containing following structure
+```
+[default]
+aws_access_key_id=ASDFS5DEWEWKR3KEXAMPLEKEY
+aws_secret_access_key=fdg87hnjsdf32WSFS214EXAMPLESECRET
+```
 
-Sitegeist.Magicwand is available via packagist. Just add `"sitegeist/magicwand" : "~1.0"` to the require-dev section of the composer.json or run `composer require --dev sitegeist/magicwand`. We use semantic-versioning so every breaking change will increase the major-version number.
+## AWS lambda function to produce the SQL dump
 
-## Contribution
+index.js
+```
+'use strict';
+const loadConfiguration = require('./configuration').loadConfiguration
+const aws = require('aws-sdk')
+const s3 = new aws.S3({ region: 'eu-central-1' })
+const environment = '/DatabaseBackup'
+const mysqldump = require("mysqldump");
+const stream = require('stream')
+let configuration
 
-We will gladly accept contributions especially to improve the rsync, and ssh-options for a specific preset. Please send us pull requests.
+var fs = require('fs');
+var path = require('path');
 
-### We will NOT add the following features to the main-repository
+async function uploadFile(filePath)
+{
+    const readStream = fs.createReadStream(filePath);
+    const writeStream = new stream.PassThrough();
+    readStream.pipe(writeStream);
 
-* Windows support: We rely on a unix-shell and a filesystem that is capable of hard-links.
-* SSH with username/password: We consider this unsafe and recommend the use of public- and private-keys.
+    var fname = path.basename(filePath);
+    var params = {
+        Bucket : configuration.bucket,
+        Key : fname,
+        Body : writeStream
+    }
+    console.log('bucket', params.Bucket)
+    console.log('key', params.Key)
+
+    let uploadPromise = new Promise((resolve, reject) => {
+        s3.upload(params, (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+
+    var res = await uploadPromise;
+    return res;
+}
+
+module.exports.handler = async (event, context, callback) => {
+
+    console.log('Load Configuration')
+    configuration = await loadConfiguration(aws, environment)
+    console.log('Create SQL dump')
+    var backupName = new Date().toISOString()+'-rds-backup.sql.gz'
+
+    await mysqldump({
+        connection: {
+            host: configuration.host,
+            user: configuration.user,
+            password: configuration.password,
+            database: configuration.name
+        },
+        dumpToFile: '/tmp/' + backupName,
+        compressFile: true
+    });
+
+    console.log('Save SQL dump to S3 bucket')
+    var res2 = await uploadFile('/tmp/'+ backupName);
+    console.log('upload result', res2);
+
+    return {
+        "Bucket": configuration.bucket,
+        "Key": backupName
+    }
+};
+
+```
+
+configuration.js
+
+```
+module.exports.loadConfiguration = async (aws, prefix) => {
+    const prefix_length = prefix.length + 1
+    const reducer = (accumulator, item) => {
+        accumulator[item.Name.substring(prefix_length)] = item.Value
+        return accumulator
+    }
+    const ssm = new aws.SSM({region: 'eu-central-1'})
+    const parameters = {
+        Path: prefix,
+        Recursive: true,
+        WithDecryption: true
+    }
+    let parameterArray = await ssm.getParametersByPath(parameters)
+        .promise()
+        .then((data) => {return data.Parameters})
+        .catch((error) => {console.log(error); return []})
+
+    return parameterArray.reduce(reducer, {})
+}
+
+```
+
+## AWS parameter
+
+Access to the production database should be stored inside the AWS enviroment.
+
+![Parameter Store Example](./Lambda/ParameterStore_Sample.png)

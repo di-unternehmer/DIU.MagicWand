@@ -74,7 +74,7 @@ class CloneCommandController extends AbstractCommandController
      * @param boolean $yes confirm execution without further input
      * @param boolean $keepDb skip dropping of database during sync
      */
-    public function dumpCommand($presetName, $yes = false, $keepDb = false)
+    public function presetCommand($presetName, $yes = false, $keepDb = false)
     {
         if (count($this->clonePresets) > 0) {
             if ($this->clonePresets && array_key_exists($presetName, $this->clonePresets)) {
