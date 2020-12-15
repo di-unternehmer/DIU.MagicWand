@@ -1,4 +1,5 @@
 <?php
+
 namespace DIU\MagicWand\Command;
 
 use Neos\Flow\Annotations as Flow;
@@ -67,6 +68,7 @@ class CloneCommandController extends AbstractCommandController
             }
         }
     }
+
     /**
      * Clone a flow setup as specified in Settings.yaml (DIU.MagicWand.clonePresets ...)
      *
@@ -88,7 +90,10 @@ class CloneCommandController extends AbstractCommandController
                         $configuration['postClone'] : null
                     ),
                     $yes,
-                    $keepDb
+                    $keepDb,
+                    (isset($configuration['profile']) ?
+                        $configuration['profile'] : null
+                    )
                 );
             } else {
                 $this->renderLine('The preset ' . $presetName . ' was not found!');
@@ -103,7 +108,8 @@ class CloneCommandController extends AbstractCommandController
     protected function importRemoteDump(
         $postClone = null,
         $yes = false,
-        $keepDb = false
+        $keepDb = false,
+        $profile = null
     )
     {
 
@@ -159,9 +165,9 @@ class CloneCommandController extends AbstractCommandController
         #  Transfer Database #
         ######################
         $this->renderHeadLine('Transfer Database');
-        $file = $this->lambdaService->getLambdaContent();
+        $file = $this->lambdaService->getLambdaContent($profile);
         $this->executeLocalShellCommand(
-            'cat '.$file.' | %s',
+            'cat ' . $file . ' | %s',
             [
                 $this->dbal->buildCmd(
                     $this->databaseConfiguration['driver'],
@@ -181,7 +187,7 @@ class CloneCommandController extends AbstractCommandController
         $resourceProxyConfiguration = $this->configurationService->getCurrentConfigurationByPath('resourceProxy');
 
         if (!$resourceProxyConfiguration) {
-            $this->renderHeadLine( 'resourceProxyConfiguration not found!');
+            $this->renderHeadLine('resourceProxyConfiguration not found!');
         }
 
 

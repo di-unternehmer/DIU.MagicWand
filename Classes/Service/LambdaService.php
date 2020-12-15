@@ -16,10 +16,10 @@ class LambdaService
      */
     protected $settings;
 
-    public function getLambdaContent() : string
+    public function getLambdaContent(?string $profile) : string
     {
         $config = [
-            'profile' => 'default',
+            'profile' => $profile ?? 'default',
             'version' => 'latest',
             'region'  => $this->settings['region'],
             'http'    => [
