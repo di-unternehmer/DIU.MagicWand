@@ -52,6 +52,9 @@ class LambdaService
     private function writeFileToData(\Aws\Result $file): string
     {
         $filename = FLOW_PATH_DATA . 'dump.sql';
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
         $inflatedBody = new InflateStream($file['Body']); // This is now readable
         $file = fopen($filename, 'a');
         fwrite($file, (string)$inflatedBody);
