@@ -56,6 +56,8 @@ DIU:
       master:
         enabled: true
         region: 'eu-central-1'
+        #aws profile in ~/aws/credentials
+        profile: 'default'
         #lambda function name which produces the sql dump
         functionName: 'sql-dump'
 
@@ -96,6 +98,8 @@ You will need to put your keys in a file called `~/.aws/credentials` containing 
 aws_access_key_id=ASDFS5DEWEWKR3KEXAMPLEKEY
 aws_secret_access_key=fdg87hnjsdf32WSFS214EXAMPLESECRET
 ```
+
+Create your credentials at AWS IAM with access to the lambda function
 
 ## AWS lambda function to produce the SQL dump
 
