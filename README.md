@@ -13,7 +13,7 @@ section of your composer.json**.
 
 *The original development and the public-releases of this package is generously sponsored by https://www.sitegeist.de.*
 
-### This package has been modified by DIU for using Amazon AWS Lambda functions to import SQL dumps (Node 12.x)
+### This package has been modified by DIU for using Amazon AWS Lambda functions to import SQL dumps
 
 * christian.schwahn@di-unternehmer.com
 
@@ -101,7 +101,7 @@ aws_secret_access_key=fdg87hnjsdf32WSFS214EXAMPLESECRET
 
 Create your credentials at AWS IAM with access to the lambda function
 
-## AWS lambda function to produce the SQL dump
+## AWS lambda function to produce the SQL dump (Node 12.x)
 
 index.js
 ```
