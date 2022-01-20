@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowMagicToExampleFunction",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeAsync",
+                "lambda:InvokeFunction",
+                "lambda:ListFunctions"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
