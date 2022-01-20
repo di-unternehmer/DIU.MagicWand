@@ -13,7 +13,7 @@ section of your composer.json**.
 
 *The original development and the public-releases of this package is generously sponsored by https://www.sitegeist.de.*
 
-### This package has been modified by DIU for using Amazon AWS Lambda functions to import SQL dumps
+### This package has been modified by DIU for using Amazon AWS Lambda functions to import SQL dumps (Node 12.x)
 
 * christian.schwahn@di-unternehmer.com
 
