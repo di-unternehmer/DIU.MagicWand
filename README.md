@@ -206,3 +206,13 @@ module.exports.loadConfiguration = async (aws, prefix) => {
 Access to the production database should be stored inside the AWS enviroment.
 
 ![Parameter Store Example](./Lambda/ParameterStore_Sample.png)
+
+Create following parameter in you parameter store:
+
+/DatabaseBackup/bucket
+/DatabaseBackup/host
+/DatabaseBackup/name
+/DatabaseBackup/password
+/DatabaseBackup/user
+
+Add IAM.Role.json policy to your account to gain access
