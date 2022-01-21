@@ -25,7 +25,7 @@ trait ProxyAwareTargetTrait
         if ($requestHandler instanceof HttpRequestHandlerInterface) {
             if (method_exists(ActionRequest::class, 'fromHttpRequest')) {
                 // From Flow 6+ we have to use a static method to create an ActionRequest. Earlier versions use the constructor.
-                $request = ActionRequest::fromHttpRequest($requestHandler->getComponentContext()->getHttpRequest());
+                $request = ActionRequest::fromHttpRequest($requestHandler->getHttpRequest());
             } else {
                 // This can be cleaned up when this package in a future release only support Flow 6+.
                 $request = new ActionRequest($requestHandler->getHttpRequest());
