@@ -41,6 +41,11 @@ class LambdaService
     private function fetchDumpFromS3(\Aws\Result $result, array $config): \Aws\Result
     {
         $fileToDownload = json_decode((string)$result->get('Payload'), true);
+
+        if(isset($fileToDownload['errorType'])) {
+            echo $fileToDownload['errorType'] . ': ' . $fileToDownload['errorMessage'];
+            die();
+        }
         $s3 = new S3Client($config);
         $file = $s3->getObject($fileToDownload);
         return $file;
